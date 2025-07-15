@@ -1,97 +1,218 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Trip Planner App (React Native CLI)
 
-# Getting Started
+Thank you for reviewing my submission for the **React Native Developer** position assessment.
 
-> **Note**: Make sure you have completed the [Set Up Your Environment](https://reactnative.dev/docs/set-up-your-environment) guide before proceeding.
+This project is a simple and modular trip planning app built using **React Native CLI** (not Expo). It showcases simulated login, trip creation, trip listing, and user settings using modern React Native tools and practices.
 
-## Step 1: Start Metro
+## Design Notes
 
-First, you will need to run **Metro**, the JavaScript build tool for React Native.
+The Figma file did not specify exact spacing (gap) values. I used Figma's measurement tools to manually match spacing and layout as closely as possible.
 
-To start the Metro dev server, run the following command from the root of your React Native project:
+## Demo User
 
-```sh
-# Using npm
-npm start
+Authentication is simulated. You may log in with any credentials, but here's a sample for consistency:
 
-# OR using Yarn
-yarn start
+- **Email:** `shakil@gmail.com`
+- **Password:** `123456`
+
+## Prerequisites
+
+- Node.js (v16 or higher)
+- React Native CLI
+- Xcode (for iOS)
+- Android Studio (for Android)
+- CocoaPods (for iOS dependencies)
+
+## Installation & Setup
+
+### Step 1: Install Dependencies
+
+```bash
+npm install
 ```
 
-## Step 2: Build and run your app
+### Step 2: Link Custom Fonts
 
-With Metro running, open a new terminal window/pane from the root of your React Native project, and use one of the following commands to build and run your Android or iOS app:
-
-### Android
-
-```sh
-# Using npm
-npm run android
-
-# OR using Yarn
-yarn android
+```bash
+npx react-native-asset
 ```
 
-### iOS
+### Step 3: iOS Setup
 
-For iOS, remember to install CocoaPods dependencies (this only needs to be run on first clone or after updating native deps).
-
-The first time you create a new project, run the Ruby bundler to install CocoaPods itself:
-
-```sh
-bundle install
+```bash
+cd ios
+pod install
+cd ..
 ```
 
-Then, and every time you update your native dependencies, run:
+### Step 4: Build and Run
 
-```sh
-bundle exec pod install
-```
+#### For iOS:
 
-For more information, please visit [CocoaPods Getting Started guide](https://guides.cocoapods.org/using/getting-started.html).
-
-```sh
-# Using npm
+```bash
+# Method 1: Using npm
 npm run ios
 
-# OR using Yarn
+# Method 2: Using React Native CLI
+npx react-native run-ios
+
+# Method 3: Using Yarn
 yarn ios
 ```
 
-If everything is set up correctly, you should see your new app running in the Android Emulator, iOS Simulator, or your connected device.
+#### For Android:
 
-This is one way to run your app — you can also build it directly from Android Studio or Xcode.
+```bash
+# Method 1: Using npm
+npm run android
 
-## Step 3: Modify your app
+# Method 2: Using React Native CLI
+npx react-native run-android
 
-Now that you have successfully run the app, let's make changes!
+# Method 3: Using Yarn
+yarn android
+```
 
-Open `App.tsx` in your text editor of choice and make some changes. When you save, your app will automatically update and reflect these changes — this is powered by [Fast Refresh](https://reactnative.dev/docs/fast-refresh).
+### Step 5: Start Metro (if not started automatically)
 
-When you want to forcefully reload, for example to reset the state of your app, you can perform a full reload:
+```bash
+npx react-native start
+```
 
-- **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Dev Menu**, accessed via <kbd>Ctrl</kbd> + <kbd>M</kbd> (Windows/Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (macOS).
-- **iOS**: Press <kbd>R</kbd> in iOS Simulator.
+## Troubleshooting
 
-## Congratulations! :tada:
+### Common iOS Issues
 
-You've successfully run and modified your React Native App. :partying_face:
+#### 1. xcode.env Error
 
-### Now what?
+**Error:** `Error running iOS. Please ensure your xcode.env file is correctly set up.`
 
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [docs](https://reactnative.dev/docs/getting-started).
+**Solution:**
 
-# Troubleshooting
+```bash
+# Create xcode.env file in ios/ directory
+cd ios
+echo 'export NODE_BINARY=$(command -v node)' > .xcode.env
+cd ..
+```
 
-If you're having issues getting the above steps to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
+#### 2. Build Folder Issues
 
-# Learn More
+**Solution:**
 
-To learn more about React Native, take a look at the following resources:
+```bash
+# Clean build folder
+rm -rf ios/build
+rm -rf ~/Library/Developer/Xcode/DerivedData
 
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.
+# Reinstall pods
+cd ios
+pod deintegrate
+pod install
+cd ..
+```
+
+#### 3. Pod Installation Issues
+
+**Solution:**
+
+```bash
+cd ios
+pod deintegrate
+pod cache clean --all
+pod install
+cd ..
+```
+
+### Common Android Issues
+
+#### 1. Gradle Build Issues
+
+**Solution:**
+
+```bash
+cd android
+./gradlew clean
+cd ..
+```
+
+#### 2. Metro Cache Issues
+
+**Solution:**
+
+```bash
+npx react-native start --reset-cache
+```
+
+### Universal Issues
+
+#### 1. App Stuck/Not Loading/Changes Not Reflecting
+
+**Solution:**
+
+```bash
+# Reset Metro cache
+npx react-native start --reset-cache
+
+# Clean everything and reinstall
+rm -rf node_modules
+npm install
+cd ios && pod install && cd ..
+```
+
+#### 2. Font Not Loading
+
+**Solution:**
+
+```bash
+# Re-link fonts
+npx react-native-asset
+
+# Clean and rebuild
+npx react-native start --reset-cache
+```
+
+#### 3. Complete Clean Installation
+
+**If all else fails:**
+
+```bash
+# Clean everything
+rm -rf node_modules
+rm -rf ios/build
+rm -rf ios/Pods
+rm -rf android/build
+rm -rf android/app/build
+rm -rf ~/Library/Developer/Xcode/DerivedData
+
+# Reinstall everything
+npm install
+npx react-native-asset
+cd ios && pod install && cd ..
+
+# Start fresh
+npx react-native start --reset-cache
+```
+
+## Running the App
+
+1. **Start Metro:** `npx react-native start`
+2. **Run iOS:** `npx react-native run-ios`
+3. **Run Android:** `npx react-native run-android`
+
+## Tech Stack
+
+- React Native CLI
+- Redux Toolkit
+- React Navigation
+- React Native Vector Icons
+- Custom Fonts
+- AsyncStorage
+
+## Features
+
+- Simulated Authentication
+- Trip Creation & Management
+- Trip Listing
+- User Settings
+- State Management with Redux
